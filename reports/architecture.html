@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fraud Detection — System Architecture</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #fff;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  .container { max-width: 1400px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    font-size: 2.4rem;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+  }
+  .subtitle {
+    text-align: center;
+    color: #8892b0;
+    margin-bottom: 50px;
+    font-size: 1.1rem;
+  }
+  .layer {
+    margin-bottom: 30px;
+    padding: 25px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .layer-title {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #4facfe;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  .row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
+  .box {
+    background: linear-gradient(135deg, var(--c1), var(--c2));
+    padding: 20px 25px;
+    border-radius: 12px;
+    min-width: 200px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+    border: 2px solid rgba(255,255,255,0.1);
+  }
+  .box:hover { transform: translateY(-4px); }
+  .box .icon { font-size: 2rem; margin-bottom: 8px; }
+  .box .name { font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; }
+  .box .tech { font-size: 0.78rem; opacity: 0.85; }
+  .arrow {
+    text-align: center;
+    color: #4facfe;
+    font-size: 2rem;
+    margin: 8px 0;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
+  }
+  .arrow-row {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    color: #4facfe;
+    font-size: 1.5rem;
+    margin: 5px 0;
+  }
+  .frontend { --c1: #667eea; --c2: #764ba2; }
+  .api { --c1: #f093fb; --c2: #f5576c; }
+  .ml { --c1: #4facfe; --c2: #00f2fe; color: #1a1a2e; }
+  .data { --c1: #43e97b; --c2: #38f9d7; color: #1a1a2e; }
+  .infra { --c1: #fa709a; --c2: #fee140; color: #1a1a2e; }
+  .label {
+    text-align: center;
+    color: #8892b0;
+    font-size: 0.85rem;
+    margin: 4px 0 12px;
+    font-style: italic;
+  }
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    background: rgba(255,255,255,0.05);
+    padding: 18px 28px;
+    border-radius: 12px;
+    text-align: center;
+    border-left: 4px solid #4facfe;
+  }
+  .stat-num {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #4facfe;
+  }
+  .stat-label {
+    font-size: 0.85rem;
+    color: #8892b0;
+    margin-top: 4px;
+  }
+  .footer {
+    text-align: center;
+    margin-top: 50px;
+    color: #5a5a7a;
+    font-size: 0.85rem;
+  }
+  .flow-tag {
+    display: inline-block;
+    background: rgba(79, 172, 254, 0.15);
+    color: #4facfe;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    margin: 4px;
+    font-family: 'Courier New', monospace;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>💳 Credit Card Fraud Detection</h1>
+  <div class="subtitle">End-to-End ML Microservice Architecture · Built with Python · 87% Precision · 85% Recall</div>
+
+  <!-- LAYER 1: CLIENT -->
+  <div class="layer">
+    <div class="layer-title">👤 Client Layer</div>
+    <div class="row">
+      <div class="box frontend">
+        <div class="icon">🌐</div>
+        <div class="name">Browser</div>
+        <div class="tech">Chrome / Firefox / Edge</div>
+      </div>
+      <div class="box frontend">
+        <div class="icon">📱</div>
+        <div class="name">Mobile App</div>
+        <div class="tech">Future: iOS / Android</div>
+      </div>
+      <div class="box frontend">
+        <div class="icon">🏦</div>
+        <div class="name">Banking System</div>
+        <div class="tech">Future: Internal API consumer</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow">⇅</div>
+  <div class="label">HTTPS · JSON · REST</div>
+
+  <!-- LAYER 2: FRONTEND -->
+  <div class="layer">
+    <div class="layer-title">🎨 Presentation Layer</div>
+    <div class="row">
+      <div class="box frontend">
+        <div class="icon">📊</div>
+        <div class="name">Streamlit Dashboard</div>
+        <div class="tech">Port 8501 · 5 pages · Interactive UI</div>
+      </div>
+    </div>
+    <div class="label" style="margin-top: 12px;">
+      <span class="flow-tag">🏠 Home</span>
+      <span class="flow-tag">🎯 Live Prediction</span>
+      <span class="flow-tag">🔌 API Mode</span>
+      <span class="flow-tag">📊 Performance</span>
+      <span class="flow-tag">📈 Explorer</span>
+    </div>
+  </div>
+
+  <div class="arrow">⇅</div>
+  <div class="label">POST /predict · POST /predict_batch · GET /health · GET /models</div>
+
+  <!-- LAYER 3: API -->
+  <div class="layer">
+    <div class="layer-title">🚀 API Layer</div>
+    <div class="row">
+      <div class="box api">
+        <div class="icon">⚡</div>
+        <div class="name">FastAPI Backend</div>
+        <div class="tech">Port 8000 · REST API · Pydantic validation</div>
+      </div>
+      <div class="box api">
+        <div class="icon">📚</div>
+        <div class="name">Swagger / OpenAPI</div>
+        <div class="tech">Auto-generated docs at /docs</div>
+      </div>
+      <div class="box api">
+        <div class="icon">🛡️</div>
+        <div class="name">CORS Middleware</div>
+        <div class="tech">Cross-origin handling</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow">⇅</div>
+  <div class="label">Inference + Explainability</div>
+
+  <!-- LAYER 4: ML -->
+  <div class="layer">
+    <div class="layer-title">🧠 ML Inference Layer</div>
+    <div class="row">
+      <div class="box ml">
+        <div class="icon">🌲</div>
+        <div class="name">Random Forest</div>
+        <div class="tech">Sklearn · ROC-AUC 0.95</div>
+      </div>
+      <div class="box ml">
+        <div class="icon">🏆</div>
+        <div class="name">XGBoost</div>
+        <div class="tech">Gradient Boosting · ROC-AUC 0.98</div>
+      </div>
+      <div class="box ml">
+        <div class="icon">🔬</div>
+        <div class="name">Neural Network</div>
+        <div class="tech">TensorFlow / Keras · ROC-AUC 0.97</div>
+      </div>
+      <div class="box ml">
+        <div class="icon">🔍</div>
+        <div class="name">SHAP Explainer</div>
+        <div class="tech">TreeExplainer · Feature attribution</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow">⇅</div>
+  <div class="label">Persisted models loaded on startup</div>
+
+  <!-- LAYER 5: STORAGE -->
+  <div class="layer">
+    <div class="layer-title">💾 Data & Model Storage</div>
+    <div class="row">
+      <div class="box data">
+        <div class="icon">📁</div>
+        <div class="name">Raw Dataset</div>
+        <div class="tech">creditcard.csv · 284,807 transactions</div>
+      </div>
+      <div class="box data">
+        <div class="icon">🔧</div>
+        <div class="name">Processed Splits</div>
+        <div class="tech">SMOTE-balanced · Train/Test pickled</div>
+      </div>
+      <div class="box data">
+        <div class="icon">🗄️</div>
+        <div class="name">Trained Models</div>
+        <div class="tech">.pkl · .keras · scaler · explainer</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRAINING PIPELINE -->
+  <div class="layer">
+    <div class="layer-title">🏗️ Training Pipeline (Offline)</div>
+    <div class="row">
+      <div class="box infra">
+        <div class="icon">📊</div>
+        <div class="name">EDA</div>
+        <div class="tech">Pandas · Matplotlib · Seaborn</div>
+      </div>
+      <div class="box infra">
+        <div class="icon">⚖️</div>
+        <div class="name">Preprocessing</div>
+        <div class="tech">RobustScaler · SMOTE · Stratified split</div>
+      </div>
+      <div class="box infra">
+        <div class="icon">🎯</div>
+        <div class="name">Model Training</div>
+        <div class="tech">Cross-validation · Hyperparameter tuning</div>
+      </div>
+      <div class="box infra">
+        <div class="icon">📏</div>
+        <div class="name">Evaluation</div>
+        <div class="tech">Precision · Recall · F1 · ROC-AUC · PR-AUC</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">284,807</div>
+      <div class="stat-label">Real Transactions</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3</div>
+      <div class="stat-label">ML Models</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">87%</div>
+      <div class="stat-label">Precision</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">85%</div>
+      <div class="stat-label">Recall</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">0.98</div>
+      <div class="stat-label">ROC-AUC</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">~50ms</div>
+      <div class="stat-label">API Latency</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Built with Python · FastAPI · Streamlit · Scikit-learn · XGBoost · TensorFlow · SHAP · Plotly
+    <br>© 2026 Fraud Detection AI · Educational Project
+  </div>
+
+</div>
+</body>
+</html>

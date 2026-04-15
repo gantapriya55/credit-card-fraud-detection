@@ -1,0 +1,11 @@
+﻿venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+data/creditcard.csv
+data/processed/
+models/*.pkl
+models/*.keras
+.DS_Store
+.vscode/
+api/__pycache__/
